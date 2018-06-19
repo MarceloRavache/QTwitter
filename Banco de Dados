@@ -1,0 +1,34 @@
+
+create sequence usuario_id_seq
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 10000000000000
+START 1
+CACHE 1;
+
+create table usuario(id integer DEFAULT
+nextval('usuario_id_seq') NOT NULL,nome varchar(50),email varchar(30),senha varchar(25),nome_completo varchar(100),
+CONSTRAINT UK_nome_email UNIQUE (nome,email),
+CONSTRAINT usuraio_pkey PRIMARY KEY(id));
+
+create table seguidores(id integer,id_seguidor integer,nome varchar(50), 
+CONSTRAINT seguidores_pkey PRIMARY KEY (id,id_seguidor),
+CONSTRAINT seguidores_fkey1 FOREIGN KEY (id) REFERENCES usuario(id),
+CONSTRAINT seguidores_fkey2 FOREIGN KEY (id_seguidor) REFERENCES usuario(id));
+
+create table seguindo(id integer, id_seguindo integer,nome varchar(50),
+CONSTRAINT seguindo_pkey PRIMARY KEY (id,id_seguindo),
+CONSTRAINT seguindo_fkey1 FOREIGN KEY (id) REFERENCES usuario(id),
+CONSTRAINT seguindo_fkey2 FOREIGN KEY (id_seguindo) REFERENCES usuario(id));
+
+create sequence postagem_id_post_seq
+INCREMENT 1
+MINVALUE 1
+MAXVALUE 100000000000000
+START 1
+CACHE 1;
+
+create table postagem(id_post integer DEFAULT
+nextval('postagem_id_post_seq') NOT NULL,id integer,conteudo varchar(150),nome varchar(50),
+CONSTRAINT postagem_pkey PRIMARY KEY (id_post),
+CONSTRAINT postagem_fkey1 FOREIGN KEY (id) REFERENCES usuario(id));
